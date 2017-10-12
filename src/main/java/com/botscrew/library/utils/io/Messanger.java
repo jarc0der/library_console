@@ -4,7 +4,7 @@ import java.util.Scanner;
 
 public class Messanger {
 
-    public static Scanner scanner = new Scanner(System.in);
+    private static Scanner scanner = new Scanner(System.in);
 
     public static String read(){
         return scanner.nextLine();

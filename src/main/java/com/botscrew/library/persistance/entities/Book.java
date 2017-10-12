@@ -1,9 +1,18 @@
 package com.botscrew.library.persistance.entities;
 
-public class Book {
+import javax.persistence.*;
 
+@Entity
+@Table(name = "books")
+public class Book {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
+
+    @Column(name = "author")
     private String author;
+
+    @Column(name = "name")
     private String name;
 
     public Book(String author, String name) {

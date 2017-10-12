@@ -1,43 +1,70 @@
 package com.botscrew.library.persistance.repository;
 
-import com.botscrew.library.persistance.MockDB;
 import com.botscrew.library.persistance.entities.Book;
+import com.botscrew.library.utils.HibernateUtil;
+import org.hibernate.Session;
+import org.hibernate.SessionFactory;
 
+import javax.persistence.Query;
 import java.util.List;
 
 public class BookRepository {
 
-    private static MockDB mockDB = new MockDB();
+    private static SessionFactory sessionFactory = HibernateUtil.getSessionFactory();
 
-    public static void add(Book book){
-        mockDB.addBook(book);
-    }
+    public static void add(Book book) {
+        Session session = sessionFactory.openSession();
+        session.beginTransaction();
 
-    public static void remove(String bookName){
+        session.save(book);
 
-        List<Book> books = getAll();
-
-        Book searchedBook = books.stream().filter(b -> b.getName().equals(bookName)).findFirst().get();
-
-        mockDB.removeBook(searchedBook);
+        session.getTransaction().commit();
 
     }
 
-    public static void update(Book book){
-        Book currentBook = getAll().stream().filter(b -> b.getId() == book.getId()).findFirst().get();
+    public static boolean remove(String bookName) {
 
-        remove(getById(book.getId()).getName());
+        Session session = sessionFactory.openSession();
+        session.beginTransaction();
 
-        add(book);
 
+        Query deleteQuery = session.createQuery("delete from Book where name = :name");
+        deleteQuery.setParameter("name", bookName);
+
+        int numberDeletedEntities = deleteQuery.executeUpdate();
+
+        session.getTransaction().commit();
+
+        return numberDeletedEntities > 0;
     }
 
-    public static List<Book> getAll(){
-        return mockDB.getAllBooks();
+    public static void update(Book book) {
+        Session session = sessionFactory.openSession();
+        session.beginTransaction();
+
+        session.update(book);
+
+        session.getTransaction().commit();
     }
 
-    public static Book getById(int id){
-       return getAll().stream().filter(b -> b.getId() == id).findFirst().get();
+    public static List<Book> getAll() {
+        Session session = sessionFactory.openSession();
+        session.beginTransaction();
+
+        List<Book> books = session.createQuery("from Book").list();
+
+        session.getTransaction().commit();
+
+        return books;
+    }
+
+    public static Book getById(int id) {
+        Session session = sessionFactory.openSession();
+        session.beginTransaction();
+
+        Book book = session.find(Book.class, id);
+
+        return book;
     }
 
 }

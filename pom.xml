@@ -27,6 +27,21 @@
           <artifactId>junit</artifactId>
           <version>RELEASE</version>
       </dependency>
+
+      <!-- Hibernate -->
+      <dependency>
+          <groupId>org.hibernate</groupId>
+          <artifactId>hibernate-core</artifactId>
+          <version>5.2.6.Final</version>
+      </dependency>
+
+      <!-- HSQL DB Engine -->
+      <dependency>
+          <groupId>org.hsqldb</groupId>
+          <artifactId>hsqldb</artifactId>
+          <version>2.3.1</version>
+          <scope>test</scope>
+      </dependency>
   </dependencies>
 
     <build>

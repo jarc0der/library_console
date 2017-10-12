@@ -1,6 +1,6 @@
 package com.botscrew.persistance;
 
-import com.botscrew.library.persistance.MockDB;
+import com.botscrew.library.utils.MockDB;
 import com.botscrew.library.persistance.entities.Book;
 import org.junit.Before;
 import org.junit.Test;

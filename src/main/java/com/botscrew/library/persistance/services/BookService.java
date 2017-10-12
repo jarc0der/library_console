@@ -9,7 +9,7 @@ public interface BookService {
 
     void addBook(Book book);
 
-    void removeBookByName(String bookName);
+    boolean removeBookByName(String bookName);
 
     void updateBook(Book book);
 

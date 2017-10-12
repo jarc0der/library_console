@@ -1,4 +1,4 @@
-package com.botscrew.library.utils;
+package com.botscrew.library.app;
 
 import com.botscrew.library.commands.CommandRegister;
 import com.botscrew.library.utils.io.Messanger;
@@ -13,7 +13,7 @@ public class LibraryManager {
 
     public void run() {
 
-        Messanger.write("Welcome to Library!");
+        Messanger.write("Welcome to Secret Library!");
 
         while (working) {
             System.out.print(">>");
@@ -22,20 +22,17 @@ public class LibraryManager {
 
             if (command.equals("f")) {
                 working = false;
-                return;
+                break;
             }
 
-            try{
+            try {
                 ParsedCommand parsedCommand = commandParser.parse(command);
 
                 commandRegister.executeCommand(parsedCommand.getCommandName(), parsedCommand.getParams());
-            }catch (RuntimeException e){
-                System.out.println(e.getMessage());
+            } catch (RuntimeException e) {
+                Messanger.write(e.getMessage());
                 continue;
             }
-
-            System.out.println("END");
-
         }
 
     }

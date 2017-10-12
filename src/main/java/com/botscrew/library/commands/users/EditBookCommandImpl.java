@@ -21,52 +21,30 @@ public class EditBookCommandImpl implements Command {
 
         String bookName = Messanger.read();
 
-
-        //TODO: Refactoring
-
         List<Book> bookList = bookService.getBooksByName(bookName);
-        int bookNumber = 0;
 
         if (bookList.size() == 0)
             throw new NoSuchBookFoundException("Can't find book with name " + bookName);
 
+        Book bookForUpdate = null;
+
         if (bookList.size() == 1) {
-
-            Messanger.write("Enter new name");
-
-            String updatedName = Messanger.read();
-
-            Book book = bookList.get(0);
-
-            book.setName(updatedName);
-
-            bookService.updateBook(book);
-
-
+            bookForUpdate = bookList.get(0);
         } else {
             showBookSubList(bookList);
-            Messanger.write("Enter list number:");
+            int userListChoice = askBookListNumber();
 
-            String listNumber = Messanger.read();
+            if (userListChoice > bookList.size() - 1 || userListChoice < 1)
+                throw new IllegalBookListNumberException("Illegal list number " + userListChoice);
 
-            bookNumber = Integer.parseInt(listNumber);
-
-            if(bookNumber > bookList.size() - 1 || bookNumber < 1)
-                throw new IllegalBookListNumberException("Illegal list number " + bookNumber);
-
-            Messanger.write("Enter new name");
-
-            String updatedName = Messanger.read();
-
-            Book book = null;
-
-            book = bookList.get(bookNumber - 1);
-
-            book.setName(updatedName);
-
-            bookService.updateBook(book);
+            bookForUpdate = bookList.get(userListChoice - 1);
         }
 
+        String updatedName = askNewBookName();
+
+        bookForUpdate.setName(updatedName);
+
+        bookService.updateBook(bookForUpdate);
 
     }
 
@@ -75,8 +53,19 @@ public class EditBookCommandImpl implements Command {
         AtomicInteger counter = new AtomicInteger(0);
 
         bookList.stream().forEach(b -> Messanger.write(counter.incrementAndGet() + ". " + b.getName()));
+    }
 
+    private String askNewBookName() {
+        Messanger.write("Enter new book name");
 
+        return Messanger.read();
+    }
+
+    private int askBookListNumber() {
+        Messanger.write("Enter list number:");
+        String listNumber = Messanger.read();
+
+        return Integer.parseInt(listNumber);
     }
 
     @Override

@@ -15,8 +15,8 @@ public class BookServiceImpl implements BookService {
     }
 
     @Override
-    public void removeBookByName(String bookName) {
-        BookRepository.remove(bookName);
+    public boolean removeBookByName(String bookName) {
+        return BookRepository.remove(bookName);
     }
 
     @Override

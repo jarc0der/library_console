@@ -1,4 +1,4 @@
-package com.botscrew.library.persistance;
+package com.botscrew.library.utils;
 
 import com.botscrew.library.persistance.entities.Book;
 

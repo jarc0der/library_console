@@ -15,16 +15,22 @@ public class RemoveBookCommandImpl implements Command{
 
     @Override
     public void execute() {
-        Messanger.write("Enter book name");
+        String bookName = params.get(0);
 
-        String bookName = Messanger.read();
+        boolean removed = bookService.removeBookByName(bookName);
 
-        bookService.removeBookByName(bookName);
-
+        if ((removed)) {
+            Messanger.write("Book " + bookName + " was removed");
+        } else {
+            Messanger.write("Any book found with name " + bookName);
+        }
     }
 
     @Override
     public void setParams(List<String> params) {
+        if(params.size() != 1)
+            throw  new IllegalArgumentException("Wrong params count");
+
         this.params = params;
     }
 }

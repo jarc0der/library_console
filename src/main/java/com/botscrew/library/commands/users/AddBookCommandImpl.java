@@ -14,14 +14,14 @@ public class AddBookCommandImpl implements Command {
 
     @Override
     public void execute() {
-        Book book = new Book();
+        Book newBook = new Book();
 
-        book.setAuthor(params.get(0));
-        book.setName(params.get(1));
+        newBook.setAuthor(params.get(0));
+        newBook.setName(params.get(1));
 
-        bookService.addBook(book);
+        bookService.addBook(newBook);
 
-        System.out.println("Added new book " + book);
+        System.out.println("Added new newBook " + newBook);
     }
 
     @Override
