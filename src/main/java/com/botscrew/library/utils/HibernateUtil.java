@@ -13,6 +13,7 @@ public class HibernateUtil {
             // Create the SessionFactory from hibernate.cfg.xml
             return new Configuration().configure()
                     .addAnnotatedClass(Book.class)
+                    .setProperty("hibernate.show_sql", "false")
                     .buildSessionFactory();
         }
         catch (Throwable ex) {
