@@ -5,7 +5,7 @@ import com.botscrew.library.exceptions.IllegalBookListNumberException;
 import com.botscrew.library.exceptions.NoSuchBookFoundException;
 import com.botscrew.library.persistance.entities.Book;
 import com.botscrew.library.persistance.services.BookService;
-import com.botscrew.library.persistance.services.BookServiceImpl;
+import com.botscrew.library.persistance.services.impl.BookServiceImpl;
 import com.botscrew.library.utils.io.Messanger;
 
 import java.util.List;
@@ -14,12 +14,12 @@ import java.util.concurrent.atomic.AtomicInteger;
 public class EditBookCommandImpl implements Command {
 
     private BookService bookService = new BookServiceImpl();
+    private List<String> params;
 
     @Override
     public void execute() {
-        Messanger.write("Enter book name");
 
-        String bookName = Messanger.read();
+        String bookName = params.get(0);
 
         List<Book> bookList = bookService.getBooksByName(bookName);
 
@@ -27,24 +27,29 @@ public class EditBookCommandImpl implements Command {
             throw new NoSuchBookFoundException("Can't find book with name " + bookName);
 
         Book bookForUpdate = null;
+        String oldBookName = null;
 
         if (bookList.size() == 1) {
             bookForUpdate = bookList.get(0);
+            oldBookName = bookForUpdate.getName();
         } else {
             showBookSubList(bookList);
-            int userListChoice = askBookListNumber();
+            int userListChoice = Messanger.askChooseNumber("Enter number from list:");
 
             if (userListChoice > bookList.size() - 1 || userListChoice < 1)
                 throw new IllegalBookListNumberException("Illegal list number " + userListChoice);
 
             bookForUpdate = bookList.get(userListChoice - 1);
+            oldBookName = bookForUpdate.getName();
         }
 
-        String updatedName = askNewBookName();
+        String updatedName = Messanger.askWriteCommandOrData("Enter new name for book:");
 
         bookForUpdate.setName(updatedName);
 
         bookService.updateBook(bookForUpdate);
+
+        Messanger.write("Name of book " + "\"" + oldBookName + "\"" + " was changed to " + "\"" + bookForUpdate.getName() + "\"");
 
     }
 
@@ -55,21 +60,12 @@ public class EditBookCommandImpl implements Command {
         bookList.stream().forEach(b -> Messanger.write(counter.incrementAndGet() + ". " + b.getName()));
     }
 
-    private String askNewBookName() {
-        Messanger.write("Enter new book name");
-
-        return Messanger.read();
-    }
-
-    private int askBookListNumber() {
-        Messanger.write("Enter list number:");
-        String listNumber = Messanger.read();
-
-        return Integer.parseInt(listNumber);
-    }
 
     @Override
     public void setParams(List<String> params) {
+        if(params.size() != 1)
+            throw new IllegalArgumentException("Wrong parameters count.");
 
+        this.params = params;
     }
 }

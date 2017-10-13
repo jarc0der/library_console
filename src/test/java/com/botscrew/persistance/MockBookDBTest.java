@@ -1,5 +1,6 @@
 package com.botscrew.persistance;
 
+import com.botscrew.library.persistance.entities.Author;
 import com.botscrew.library.utils.MockDB;
 import com.botscrew.library.persistance.entities.Book;
 import org.junit.Before;
@@ -15,8 +16,8 @@ public class MockBookDBTest {
     @Before
     public void setUp(){
         this.mockDB = new MockDB();
-        mockDB.addBook(new Book("author1", "name1"));
-        mockDB.addBook(new Book("author2", "name2"));
+        mockDB.addBook(new Book(new Author(), "name1"));
+        mockDB.addBook(new Book(new Author(), "name2"));
     }
 
 

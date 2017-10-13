@@ -14,4 +14,20 @@ public class Messanger {
         System.out.println(message);
     }
 
+    public static Integer readInt(){
+        return Integer.parseInt(scanner.nextLine());
+    }
+
+    public static String askWriteCommandOrData(String message){
+        write(message);
+        System.out.print(">>");
+        return read();
+    }
+
+    public static int askChooseNumber(String message) {
+        write(message);
+        System.out.print(">>");
+        return readInt();
+
+    }
 }

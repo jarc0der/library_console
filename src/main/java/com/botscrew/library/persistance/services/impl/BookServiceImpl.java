@@ -1,7 +1,8 @@
-package com.botscrew.library.persistance.services;
+package com.botscrew.library.persistance.services.impl;
 
 import com.botscrew.library.persistance.entities.Book;
 import com.botscrew.library.persistance.repository.BookRepository;
+import com.botscrew.library.persistance.services.BookService;
 
 import java.util.Comparator;
 import java.util.List;
@@ -21,7 +22,6 @@ public class BookServiceImpl implements BookService {
 
     @Override
     public void updateBook(Book book) {
-        //we can identify book by id
         BookRepository.update(book);
     }
 
