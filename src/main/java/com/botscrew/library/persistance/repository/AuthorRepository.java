@@ -32,7 +32,10 @@ public class AuthorRepository {
 
         session.getTransaction().commit();
 
-        return authorList.get(authorList.size() - 1);
+        if(authorList.size() > 0)
+            return authorList.get(authorList.size() - 1);
+
+        return new Author("Unknown");
 
     }
 

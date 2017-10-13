@@ -29,6 +29,10 @@ public class Author extends BaseEntity {
         this.bookList = new ArrayList<>();
     }
 
+    public Author(String unknown) {
+        super();
+    }
+
     public String getFirstName() {
         return firstName;
     }

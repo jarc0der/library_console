@@ -29,6 +29,7 @@ public class AddBookCommandImpl implements Command {
         Author author = null;
 
         boolean answer = isChooseAuthor();
+        int chosenNumber;
 
         if (!answer) {
             String command = Messanger.askWriteCommandOrData("Tip. To add new author use command: author [first name] [last name]");
@@ -50,15 +51,22 @@ public class AddBookCommandImpl implements Command {
 
             Messanger.write("---- List of authors ----");
 
-            printAuthorList(authorList);
+            if(authorList.size() == 0){
+                Messanger.write("Tip. You can add new author: author [first_name] [last_name]");
+                return;
+            }
 
-            int choose = Messanger.askChooseNumber("Enter number:");
+            else{
+                chosenNumber = Messanger.askChooseNumber("Enter number:");
+                printAuthorList(authorList);
+            }
+
 
             //retrieve author from list by id
-            Author choosedAuthor = authorList.get(choose - 1);
+            Author chosenAuthor = authorList.get(chosenNumber - 1);
 
             //set to local var
-            author = choosedAuthor;
+            author = chosenAuthor;
         }
 
 

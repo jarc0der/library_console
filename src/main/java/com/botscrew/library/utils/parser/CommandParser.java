@@ -7,29 +7,41 @@ public class CommandParser {
 
     public ParsedCommand parse(String data) {
 
-        String[] parsedData = data.split(" ");
-
-        String commandName = parsedData[0];
-
-        List<String> params = null;
-
-        if (parsedData.length > 1) {
-            params = retrieveParams(parsedData);
-        }
-
-        return new ParsedCommand(commandName, params);
-    }
-
-    private List<String> retrieveParams(String[] data) {
         List<String> params = new ArrayList<>();
 
-        for (int i = 1; i < data.length; i++) {
-            params.add(data[i]);
+        String delimiter = " ";
+
+        int position = data.indexOf(delimiter);
+
+        if(position == -1){
+            return new ParsedCommand(data, new ArrayList<>());
         }
 
-        return params;
+        String command = data.substring(0, position);
 
+        while (position < data.length()) {
+            if (data.charAt(position + 1) == '\'') {
+                int index = data.indexOf('\'', position + 2);
+
+                params.add(data.substring(position + 2, index));
+
+                position = index + 1;
+            } else {
+                //get next delimiter position
+                int index = data.indexOf(delimiter, position + 2);
+
+                //define end of the String
+                if (index == -1) {
+                    index = data.length();
+                }
+
+                params.add(data.substring(position + 1, index));
+
+                position = index + 1;
+            }
+        }
+
+        return new ParsedCommand(command, params);
     }
-
 
 }

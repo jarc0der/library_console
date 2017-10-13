@@ -30,7 +30,8 @@ public class LibraryManager {
 
                 commandRegister.executeCommand(parsedCommand.getCommandName(), parsedCommand.getParams());
             } catch (RuntimeException e) {
-                Messanger.write(e.getMessage());
+//                Messanger.write(e.getMessage());
+                e.printStackTrace();
                 continue;
             }
         }
