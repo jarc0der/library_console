@@ -36,7 +36,7 @@ public class EditBookCommandImpl implements Command {
             showBookSubList(bookList);
             int userListChoice = Messanger.askChooseNumber("Enter number from list:");
 
-            if (userListChoice > bookList.size() - 1 || userListChoice < 1)
+            if (userListChoice > bookList.size() || userListChoice < 1)
                 throw new IllegalBookListNumberException("Illegal list number " + userListChoice);
 
             bookForUpdate = bookList.get(userListChoice - 1);
