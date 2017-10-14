@@ -8,6 +8,7 @@ import com.tngtech.java.junit.dataprovider.UseDataProvider;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
+import java.util.Arrays;
 import java.util.List;
 
 import static org.junit.Assert.assertEquals;
@@ -18,7 +19,7 @@ public class CommandParserTest {
     private CommandParser parser = new CommandParser();
 
     @Test
-    public void simpleParseTest(){
+    public void simpleParseTest() {
         String command = "command1 param1 param2";
 
         ParsedCommand command1 = parser.parse(command);
@@ -28,7 +29,7 @@ public class CommandParserTest {
     }
 
     @Test
-    public void complicatedParseTest(){
+    public void complicatedParseTest() {
         String command = "command1 'sub-param1 sub-param2 sub-param3' 'param3' param4";
 
         ParsedCommand command1 = parser.parse(command);
@@ -38,7 +39,7 @@ public class CommandParserTest {
     }
 
     @Test
-    public void onlyCommandTest(){
+    public void onlyCommandTest() {
         String command = "command1";
 
         ParsedCommand command1 = parser.parse(command);
@@ -49,29 +50,49 @@ public class CommandParserTest {
 
     @Test
     @UseDataProvider("simpleCommands")
-    public void onlySimpleCommandTest(String input, String expectedCommand, String param, int expectedParamsCount){
+    public void onlySimpleCommandTest(String input, String expectedCommand, List<String> param, int expectedParamsCount) {
         ParsedCommand command1 = parser.parse(input);
 
         assertEquals(expectedCommand, command1.getCommandName());
 
-        assertEquals(param, command1.getParams().get(0));
+        assertEquals(param, command1.getParams());
 
         assertEquals(expectedParamsCount, command1.getParams().size());
     }
 
     @DataProvider
-    public static Object[][] simpleCommands(){
+    public static Object[][] simpleCommands() {
         return new Object[][]{
                 {
-                    "com param1",
-                    "param1",
-                    1
+                        "com param1",
+                        "com",
+                        Arrays.asList("param1"),
+                        1
                 },
                 {
-                    "com 'param1'",
-                    "param1",
-                    1
+                        "com 'param1'",
+                        "com",
+                        Arrays.asList("param1"),
+                        1
                 },
+                {
+                        "com 'param1 sub1' param2",
+                        "com",
+                        Arrays.asList("param1 sub1", "param2"),
+                        2
+                },
+                {
+                        "com 'param1 sub1' 'param2 sub2'",
+                        "com",
+                        Arrays.asList("param1 sub1", "param2 sub2"),
+                        2
+                },
+                {
+                        "com",
+                        "com",
+                        Arrays.asList(),
+                        0
+                }
         };
     }
 

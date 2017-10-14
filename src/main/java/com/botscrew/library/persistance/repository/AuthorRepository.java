@@ -6,6 +6,7 @@ import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 
 import java.util.List;
+import java.util.Optional;
 
 public class AuthorRepository {
 
@@ -19,23 +20,6 @@ public class AuthorRepository {
         session.save(author);
 
         session.getTransaction().commit();
-
-    }
-
-
-    public Author getLast() {
-        Session session = sessionFactory.openSession();
-        session.beginTransaction();
-
-        //TODO: simplify this
-        List<Author> authorList = session.createQuery("from Author").list();
-
-        session.getTransaction().commit();
-
-        if(authorList.size() > 0)
-            return authorList.get(authorList.size() - 1);
-
-        return new Author("Unknown");
 
     }
 

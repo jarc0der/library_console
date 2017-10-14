@@ -10,5 +10,7 @@ public class App
         java.util.logging.Logger.getLogger("org.hibernate").setLevel(Level.OFF);
         HibernateUtil.getSessionFactory();
         new LibraryManager().run();
+
+        System.exit(0);
     }
 }

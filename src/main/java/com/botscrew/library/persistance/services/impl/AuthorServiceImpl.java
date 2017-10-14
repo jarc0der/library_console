@@ -5,6 +5,7 @@ import com.botscrew.library.persistance.repository.AuthorRepository;
 import com.botscrew.library.persistance.services.AuthorService;
 
 import java.util.List;
+import java.util.Optional;
 
 public class AuthorServiceImpl implements AuthorService {
 
@@ -17,7 +18,11 @@ public class AuthorServiceImpl implements AuthorService {
 
     @Override
     public Author getLastAddedAuthor() {
-       return authorRepository.getLast();
+        List<Author> authorList = getAllAuthors();
+
+        Optional<Author> author = authorList.stream().skip(authorList.size() - 1).findAny();
+
+        return author.orElse(new Author("Unknown"));
     }
 
     @Override

@@ -49,18 +49,15 @@ public class AddBookCommandImpl implements Command {
             //show all authors
             List<Author> authorList = authorService.getAllAuthors();
 
-            Messanger.write("---- List of authors ----");
-
-            if(authorList.size() == 0){
+            if (authorList.size() == 0) {
+                Messanger.write("Unfortunately there isn't any author.");
                 Messanger.write("Tip. You can add new author: author [first_name] [last_name]");
                 return;
-            }
-
-            else{
-                chosenNumber = Messanger.askChooseNumber("Enter number:");
+            } else {
+                Messanger.write("---- List of authors ----");
                 printAuthorList(authorList);
+                chosenNumber = Messanger.askChooseNumber("Enter number:");
             }
-
 
             //retrieve author from list by id
             Author chosenAuthor = authorList.get(chosenNumber - 1);
@@ -81,14 +78,14 @@ public class AddBookCommandImpl implements Command {
         Messanger.write("Book " + "\"" + newBook.getName() + "\"" + " for author " + author + " was added.");
     }
 
-    private void printAuthorList(List<Author> authorList){
+    private void printAuthorList(List<Author> authorList) {
 
         AtomicInteger counter = new AtomicInteger(0);
 
         authorList.stream().forEach(a -> System.out.println(counter.incrementAndGet() + ". " + a));
     }
 
-    private boolean isChooseAuthor(){
+    private boolean isChooseAuthor() {
         Messanger.write("Do you want to choose author? y/n");
 
         return Messanger.read().equals("y");
@@ -96,7 +93,7 @@ public class AddBookCommandImpl implements Command {
 
     @Override
     public void setParams(List<String> params) {
-
+        //ignored for this command
     }
 
 

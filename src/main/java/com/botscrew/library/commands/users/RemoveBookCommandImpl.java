@@ -22,7 +22,7 @@ public class RemoveBookCommandImpl implements Command{
         if ((removed)) {
             Messanger.write("Book " + bookName + " was removed");
         } else {
-            Messanger.write("Any book found with name " + bookName);
+            Messanger.write("Book with name " + "\"" + bookName + "\"" + " wasn't found.");
         }
     }
 

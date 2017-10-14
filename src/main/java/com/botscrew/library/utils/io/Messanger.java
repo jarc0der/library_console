@@ -25,9 +25,14 @@ public class Messanger {
     }
 
     public static int askChooseNumber(String message) {
-        write(message);
-        System.out.print(">>");
-        return readInt();
+        try{
+            write(message);
+            System.out.print(">>");
+            return readInt();
+        }catch (RuntimeException e){
+            throw new IllegalArgumentException("Incorrect number");
+        }
+
 
     }
 }

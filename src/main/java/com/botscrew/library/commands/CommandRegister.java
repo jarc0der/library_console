@@ -22,15 +22,13 @@ public class CommandRegister {
     }
 
     private static void addCommand(String name, Command command) {
-
         commandList.put(name, command);
-
     }
 
-    //TODO: Refactor
+
     public static void executeCommand(String name, List<String> params) {
 
-        if(!checkCommandExists(name))
+        if (!checkCommandExists(name))
             throw new UnknownCommandException("We can't find command " + name);
 
         Command command = commandList.get(name);
@@ -45,7 +43,7 @@ public class CommandRegister {
         command.execute();
     }
 
-    private static boolean checkCommandExists(String command){
+    private static boolean checkCommandExists(String command) {
         return commandList.containsKey(command);
     }
 

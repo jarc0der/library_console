@@ -15,9 +15,15 @@ public class ListBookCommandImpl implements Command {
 
     @Override
     public void execute() {
-        Messanger.write("---- Book List ----");
         List<Book> retrievedBooks = bookService.getAllBooksOrdered(Comparator.comparing(Book::getName));
 
+        if(retrievedBooks.size() == 0){
+            Messanger.write("Unfortunately, we can't find any book");
+            Messanger.write("Tip. To add new book type: add");
+            return;
+        }
+
+        Messanger.write("---- Book List ----");
         printBookList(retrievedBooks);
     }
 
