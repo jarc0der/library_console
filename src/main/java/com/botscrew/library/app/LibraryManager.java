@@ -20,7 +20,7 @@ public class LibraryManager {
 
             String command = Messanger.read();
 
-            if (command.equals("f")) {
+            if (command.equals("q")) {
                 working = false;
                 break;
             }
@@ -31,6 +31,7 @@ public class LibraryManager {
                 commandRegister.executeCommand(parsedCommand.getCommandName(), parsedCommand.getParams());
             } catch (RuntimeException e) {
                 Messanger.write(e.getMessage());
+//                e.printStackTrace();
                 continue;
             }
         }

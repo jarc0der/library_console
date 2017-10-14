@@ -16,7 +16,7 @@ public class BookRepository {
         Session session = sessionFactory.openSession();
         session.beginTransaction();
 
-        session.save(book);
+        session.saveOrUpdate(book);
 
         session.getTransaction().commit();
 

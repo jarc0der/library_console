@@ -36,14 +36,17 @@
       </dependency>
 
       <!-- HSQL DB Engine -->
-      <!-- https://mvnrepository.com/artifact/org.hsqldb/hsqldb -->
       <dependency>
           <groupId>org.hsqldb</groupId>
           <artifactId>hsqldb</artifactId>
           <version>2.3.4</version>
-          <scope>test</scope>
       </dependency>
 
+      <dependency>
+          <groupId>com.tngtech.java</groupId>
+          <artifactId>junit-dataprovider</artifactId>
+          <version>1.5.0</version>
+      </dependency>
   </dependencies>
 
     <build>

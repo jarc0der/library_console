@@ -1,22 +1,21 @@
 package com.botscrew.library.persistance.entities;
 
+import com.botscrew.library.persistance.entities.domain.BaseEntity;
+
 import javax.persistence.*;
 
 @Entity
 @Table(name = "books")
-public class Book {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
+public class Book extends BaseEntity{
 
-    @Column(name = "author")
-    private String author;
+    @ManyToOne
+    @JoinColumn(name = "author_id")
+    private Author author;
 
     @Column(name = "name")
     private String name;
 
-    public Book(String author, String name) {
-        this.author = author;
+    public Book(String name) {
         this.name = name;
     }
 
@@ -24,20 +23,15 @@ public class Book {
 
     }
 
-    public String getAuthor() {
+    public Book(Author author, String name2) {
+    }
+
+    public Author getAuthor() {
         return author;
     }
 
-    public void setAuthor(String author) {
+    public void setAuthor(Author author) {
         this.author = author;
-    }
-
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
     }
 
     public String getName() {
@@ -51,8 +45,7 @@ public class Book {
     @Override
     public String toString() {
         return "Book{" +
-                "id=" + id +
-                ", author='" + author + '\'' +
+                "id=" + super.getId() +
                 ", name='" + name + '\'' +
                 '}';
     }

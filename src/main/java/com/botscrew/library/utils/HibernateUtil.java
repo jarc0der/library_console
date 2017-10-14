@@ -1,5 +1,6 @@
 package com.botscrew.library.utils;
 
+import com.botscrew.library.persistance.entities.Author;
 import com.botscrew.library.persistance.entities.Book;
 import org.hibernate.SessionFactory;
 import org.hibernate.cfg.Configuration;
@@ -13,6 +14,7 @@ public class HibernateUtil {
             // Create the SessionFactory from hibernate.cfg.xml
             return new Configuration().configure()
                     .addAnnotatedClass(Book.class)
+                    .addAnnotatedClass(Author.class)
                     .setProperty("hibernate.show_sql", "false")
                     .buildSessionFactory();
         }
