@@ -1,7 +1,7 @@
 package com.botscrew.parser;
 
 import com.botscrew.library.utils.parser.CommandParser;
-import com.botscrew.library.utils.parser.ParsedCommand;
+import com.botscrew.library.utils.parser.ParametrizedCommand;
 import com.tngtech.java.junit.dataprovider.DataProvider;
 import com.tngtech.java.junit.dataprovider.DataProviderRunner;
 import com.tngtech.java.junit.dataprovider.UseDataProvider;
@@ -22,7 +22,7 @@ public class CommandParserTest {
     public void simpleParseTest() {
         String command = "command1 param1 param2";
 
-        ParsedCommand command1 = parser.parse(command);
+        ParametrizedCommand command1 = parser.parse(command);
 
         assertEquals(command1.getCommandName(), "command1");
         assertEquals(command1.getParams().size(), 2);
@@ -32,7 +32,7 @@ public class CommandParserTest {
     public void complicatedParseTest() {
         String command = "command1 'sub-param1 sub-param2 sub-param3' 'param3' param4";
 
-        ParsedCommand command1 = parser.parse(command);
+        ParametrizedCommand command1 = parser.parse(command);
 
         assertEquals("command1", command1.getCommandName());
         assertEquals(3, command1.getParams().size());
@@ -42,7 +42,7 @@ public class CommandParserTest {
     public void onlyCommandTest() {
         String command = "command1";
 
-        ParsedCommand command1 = parser.parse(command);
+        ParametrizedCommand command1 = parser.parse(command);
 
         assertEquals("command1", command1.getCommandName());
         assertEquals(0, command1.getParams().size());
@@ -51,7 +51,7 @@ public class CommandParserTest {
     @Test
     @UseDataProvider("simpleCommands")
     public void onlySimpleCommandTest(String input, String expectedCommand, List<String> param, int expectedParamsCount) {
-        ParsedCommand command1 = parser.parse(input);
+        ParametrizedCommand command1 = parser.parse(input);
 
         assertEquals(expectedCommand, command1.getCommandName());
 
@@ -82,9 +82,21 @@ public class CommandParserTest {
                         2
                 },
                 {
+                        "com param1 param2",
+                        "com",
+                        Arrays.asList("param1", "param2"),
+                        2
+                },
+                {
                         "com 'param1 sub1' 'param2 sub2'",
                         "com",
                         Arrays.asList("param1 sub1", "param2 sub2"),
+                        2
+                },
+                {
+                        "com 'param1' params",
+                        "com",
+                        Arrays.asList("param1", "params"),
                         2
                 },
                 {

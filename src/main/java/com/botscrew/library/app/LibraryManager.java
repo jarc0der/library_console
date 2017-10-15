@@ -3,7 +3,7 @@ package com.botscrew.library.app;
 import com.botscrew.library.commands.CommandRegister;
 import com.botscrew.library.utils.io.Messanger;
 import com.botscrew.library.utils.parser.CommandParser;
-import com.botscrew.library.utils.parser.ParsedCommand;
+import com.botscrew.library.utils.parser.ParametrizedCommand;
 
 public class LibraryManager {
 
@@ -26,13 +26,12 @@ public class LibraryManager {
             }
 
             try {
-                ParsedCommand parsedCommand = commandParser.parse(command);
+                ParametrizedCommand parametrizedCommand = commandParser.parse(command);
 
-                commandRegister.executeCommand(parsedCommand.getCommandName(), parsedCommand.getParams());
+                CommandRegister.executeCommand(parametrizedCommand.getCommandName(), parametrizedCommand.getParams());
             } catch (RuntimeException e) {
                 Messanger.write(e.getMessage());
 //                e.printStackTrace();
-                continue;
             }
         }
 

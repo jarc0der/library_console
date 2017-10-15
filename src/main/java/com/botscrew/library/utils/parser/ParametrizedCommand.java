@@ -2,12 +2,12 @@ package com.botscrew.library.utils.parser;
 
 import java.util.List;
 
-public class ParsedCommand {
+public class ParametrizedCommand {
 
     private String commandName;
     private List<String> params;
 
-    public ParsedCommand(String commandName, List<String> params) {
+    protected ParametrizedCommand(String commandName, List<String> params) {
         this.commandName = commandName;
         this.params = params;
     }

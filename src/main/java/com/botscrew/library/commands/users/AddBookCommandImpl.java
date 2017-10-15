@@ -10,7 +10,7 @@ import com.botscrew.library.persistance.services.BookService;
 import com.botscrew.library.persistance.services.impl.BookServiceImpl;
 import com.botscrew.library.utils.io.Messanger;
 import com.botscrew.library.utils.parser.CommandParser;
-import com.botscrew.library.utils.parser.ParsedCommand;
+import com.botscrew.library.utils.parser.ParametrizedCommand;
 
 import java.util.List;
 import java.util.concurrent.atomic.AtomicInteger;
@@ -26,7 +26,7 @@ public class AddBookCommandImpl implements Command {
 
     @Override
     public void execute() {
-        Author author = null;
+        Author author;
 
         boolean answer = isChooseAuthor();
         int chosenNumber;
@@ -35,9 +35,9 @@ public class AddBookCommandImpl implements Command {
             String command = Messanger.askWriteCommandOrData("Tip. To add new author use command: author [first name] [last name]");
 
             try {
-                ParsedCommand parsedCommand = commandParser.parse(command);
+                ParametrizedCommand parametrizedCommand = commandParser.parse(command);
 
-                CommandRegister.executeCommand(parsedCommand.getCommandName(), parsedCommand.getParams());
+                CommandRegister.executeCommand(parametrizedCommand.getCommandName(), parametrizedCommand.getParams());
             } catch (RuntimeException e) {
                 Messanger.write(e.getMessage());
             }
@@ -59,11 +59,8 @@ public class AddBookCommandImpl implements Command {
                 chosenNumber = Messanger.askChooseNumber("Enter number:");
             }
 
-            //retrieve author from list by id
-            Author chosenAuthor = authorList.get(chosenNumber - 1);
-
             //set to local var
-            author = chosenAuthor;
+            author = authorList.get(chosenNumber - 1);
         }
 
 

@@ -5,7 +5,7 @@ import java.util.List;
 
 public class CommandParser {
 
-    public ParsedCommand parse(String data) {
+    public ParametrizedCommand parse(String data) {
 
         List<String> params = new ArrayList<>();
 
@@ -14,7 +14,7 @@ public class CommandParser {
         int position = data.indexOf(delimiter);
 
         if(position == -1){
-            return new ParsedCommand(data, new ArrayList<>());
+            return new ParametrizedCommand(data, new ArrayList<>());
         }
 
         String command = data.substring(0, position);
@@ -38,11 +38,10 @@ public class CommandParser {
 
                     params.add(data.substring(position + 1, index));
 
-                    position = index + 1;
+                    position = index;
                 }
             }
-
-            return new ParsedCommand(command, params);
+            return new ParametrizedCommand(command, params);
         }catch (RuntimeException e){
             throw new IllegalArgumentException("Wrong params for this command");
         }
