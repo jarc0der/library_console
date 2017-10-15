@@ -22,6 +22,7 @@ com.botscrew.library.App
 Maven
 ```
 ## Usage
+**Use single quote symbol for names with two or more words. Example: remove 'Effective Java 2 Edition' - include ' symbols.**
 
 ### Author 
 ```
