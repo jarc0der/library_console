@@ -4,7 +4,7 @@ import com.botscrew.library.commands.Command;
 import com.botscrew.library.persistance.entities.Book;
 import com.botscrew.library.persistance.services.BookService;
 import com.botscrew.library.persistance.services.impl.BookServiceImpl;
-import com.botscrew.library.utils.io.Messanger;
+import com.botscrew.library.utils.io.Messenger;
 
 import java.util.Comparator;
 import java.util.List;
@@ -18,18 +18,18 @@ public class ListBookCommandImpl implements Command {
         List<Book> retrievedBooks = bookService.getAllBooksOrdered(Comparator.comparing(Book::getName));
 
         if(retrievedBooks.size() == 0){
-            Messanger.write("Unfortunately, we can't find any book");
-            Messanger.write("Tip. To add new book type: add");
+            Messenger.write("Unfortunately, we can't find any book");
+            Messenger.write("Tip. To add new book type: add");
             return;
         }
 
-        Messanger.write("---- Book List ----");
+        Messenger.write("---- Book List ----");
         printBookList(retrievedBooks);
     }
 
     private void printBookList(List<Book> books){
 
-        books.stream().forEach(b -> Messanger.write("Book: " + "\"" +b.getName() + "\"\n\t" + " Author: " + b.getAuthor()));
+        books.stream().forEach(b -> Messenger.write("Book: " + "\"" +b.getName() + "\"\n\t" + " Author: " + b.getAuthor()));
 
     }
 

@@ -8,7 +8,7 @@ import com.botscrew.library.persistance.services.AuthorService;
 import com.botscrew.library.persistance.services.impl.AuthorServiceImpl;
 import com.botscrew.library.persistance.services.BookService;
 import com.botscrew.library.persistance.services.impl.BookServiceImpl;
-import com.botscrew.library.utils.io.Messanger;
+import com.botscrew.library.utils.io.Messenger;
 import com.botscrew.library.utils.parser.CommandParser;
 import com.botscrew.library.utils.parser.ParametrizedCommand;
 
@@ -32,14 +32,14 @@ public class AddBookCommandImpl implements Command {
         int chosenNumber;
 
         if (!answer) {
-            String command = Messanger.askWriteCommandOrData("Tip. To add new author use command: author [first name] [last name]");
+            String command = Messenger.askWriteCommandOrData("Tip. To add new author use command: author [first name] [last name]");
 
             try {
                 ParametrizedCommand parametrizedCommand = commandParser.parse(command);
 
                 CommandRegister.executeCommand(parametrizedCommand.getCommandName(), parametrizedCommand.getParams());
             } catch (RuntimeException e) {
-                Messanger.write(e.getMessage());
+                Messenger.write(e.getMessage());
             }
 
             //retrieve last added author
@@ -50,13 +50,13 @@ public class AddBookCommandImpl implements Command {
             List<Author> authorList = authorService.getAllAuthors();
 
             if (authorList.size() == 0) {
-                Messanger.write("Unfortunately there isn't any author.");
-                Messanger.write("Tip. You can add new author: author [first_name] [last_name]");
+                Messenger.write("Unfortunately there isn't any author.");
+                Messenger.write("Tip. You can add new author: author [first_name] [last_name]");
                 return;
             } else {
-                Messanger.write("---- List of authors ----");
+                Messenger.write("---- List of authors ----");
                 printAuthorList(authorList);
-                chosenNumber = Messanger.askChooseNumber("Enter number:");
+                chosenNumber = Messenger.askChooseNumber("Enter number:");
             }
 
             //set to local var
@@ -64,7 +64,7 @@ public class AddBookCommandImpl implements Command {
         }
 
 
-        String bookName = Messanger.askWriteCommandOrData("Enter book name:");
+        String bookName = Messenger.askWriteCommandOrData("Enter book name:");
 
         Book newBook = new Book(bookName);
         author.addBook(newBook);
@@ -72,7 +72,7 @@ public class AddBookCommandImpl implements Command {
         //save author
         bookService.addBook(newBook);
 
-        Messanger.write("Book " + "\"" + newBook.getName() + "\"" + " for author " + author + " was added.");
+        Messenger.write("Book " + "\"" + newBook.getName() + "\"" + " for author " + author + " was added.");
     }
 
     private void printAuthorList(List<Author> authorList) {
@@ -83,9 +83,9 @@ public class AddBookCommandImpl implements Command {
     }
 
     private boolean isChooseAuthor() {
-        Messanger.write("Do you want to choose author? y/n");
+        Messenger.write("Do you want to choose author? y/n");
 
-        return Messanger.read().equals("y");
+        return Messenger.read().equals("y");
     }
 
     @Override

@@ -2,7 +2,7 @@ package com.botscrew.library.utils.io;
 
 import java.util.Scanner;
 
-public class Messanger {
+public class Messenger {
 
     private static Scanner scanner = new Scanner(System.in);
 
@@ -25,14 +25,9 @@ public class Messanger {
     }
 
     public static int askChooseNumber(String message) {
-        try{
-            write(message);
-            System.out.print(">>");
-            return readInt();
-        }catch (RuntimeException e){
-            throw new IllegalArgumentException("Incorrect number");
-        }
-
+        write(message);
+        System.out.print(">>");
+        return readInt();
 
     }
 }

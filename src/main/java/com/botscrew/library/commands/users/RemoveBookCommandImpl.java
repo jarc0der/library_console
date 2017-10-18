@@ -3,7 +3,7 @@ package com.botscrew.library.commands.users;
 import com.botscrew.library.commands.Command;
 import com.botscrew.library.persistance.services.BookService;
 import com.botscrew.library.persistance.services.impl.BookServiceImpl;
-import com.botscrew.library.utils.io.Messanger;
+import com.botscrew.library.utils.io.Messenger;
 
 import java.util.List;
 
@@ -20,9 +20,9 @@ public class RemoveBookCommandImpl implements Command{
         boolean removed = bookService.removeBookByName(bookName);
 
         if ((removed)) {
-            Messanger.write("Book " + bookName + " was removed");
+            Messenger.write("Book " + bookName + " was removed");
         } else {
-            Messanger.write("Book with name " + "\"" + bookName + "\"" + " wasn't found.");
+            Messenger.write("Book with name " + "\"" + bookName + "\"" + " wasn't found.");
         }
     }
 

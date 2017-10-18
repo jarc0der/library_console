@@ -4,7 +4,7 @@ import com.botscrew.library.commands.Command;
 import com.botscrew.library.persistance.entities.Author;
 import com.botscrew.library.persistance.services.AuthorService;
 import com.botscrew.library.persistance.services.impl.AuthorServiceImpl;
-import com.botscrew.library.utils.io.Messanger;
+import com.botscrew.library.utils.io.Messenger;
 
 import java.util.List;
 
@@ -23,7 +23,7 @@ public class AddAuthorCommandImpl implements Command {
 
         authorService.addAuthor(author);
 
-        Messanger.write("Author " + "\"" + author + "\"" + " was added");
+        Messenger.write("Author " + "\"" + author + "\"" + " was added");
 
     }
 
